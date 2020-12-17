@@ -11,3 +11,5 @@ Each entry should begin with the following format: firstL -- TIMESTAMP\n ( e.g.:
 
 > erinL -- 2020-12-6 21:00
 Setting up structure for project, with README, Devlog, etc.
+> erinL -- 2020-12-16 22:25
+Created design PDF, with project components, task breakdown, site map, database organization. Uploaded to repo.
