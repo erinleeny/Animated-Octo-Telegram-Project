@@ -13,3 +13,5 @@ Each entry should begin with the following format: firstL -- TIMESTAMP\n ( e.g.:
 Setting up structure for project, with README, Devlog, etc.
 > erinL -- 2020-12-16 22:25
 Created design PDF, with project components, task breakdown, site map, database organization. Uploaded to repo.
+> maddyA -- 2020-12-20 19:45
+Created updated design PDF (for blog project, instead of wiki project), including project components, component map, databases, site map, and task breakdown. Uploaded to repo. 
