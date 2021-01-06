@@ -17,7 +17,7 @@ passw = "pass"
 @app.route("/") 
 def test_tmplt():
     if "username" in session:
-        return render_template('response.html', name=session['username'], password=session['password'],method=session['method'])
+        return render_template('profile.html', name=session['username'], password=session['password'],method=session['method'])
     return render_template('login.html', message="")
 
 @app.route("/register", methods=['POST','GET'])
@@ -41,7 +41,7 @@ def user():
     session["username"] = username
     session["password"] = password
     session["method"] = method
-    return render_template('response.html', fName=first_name, lName=last_name, name=username, password=password, method=method)
+    return render_template('profile.html', fName=first_name, lName=last_name, name=username, password=password, method=method)
 
 @app.route("/logout", methods=['POST', 'GET'])
 def logout():
@@ -60,6 +60,7 @@ def authenticate():
         username=request.args['username'] 
         password=request.args['password']
 
+    ## todo: authenticate against the actual table of users, not hard-coded
     print("\n\n\n")
     print("***DIAG: this Flask obj ***")
     print(app)
@@ -79,7 +80,7 @@ def authenticate():
     session["username"] = username
     session["password"] = password
     session["method"] = method
-    return render_template('response.html', name=username, password=password, method=method)  #response to a form submission
+    return render_template('profile.html', name=username, password=password, method=method)  #response to a form submission
 
 if __name__ == "__main__":  # true if this file NOT imported
   app.debug = True        # enable auto-reload upon code change
