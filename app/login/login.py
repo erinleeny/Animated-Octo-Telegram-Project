@@ -6,11 +6,12 @@ import sqlite3
 from flask import Flask, render_template, session
 from flask import request  
 import os
-from db_builder import create_user
+import random
+from db_builder import create_user, authenticate_user
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32) #set up session secret key
-
+#c = db.cursor() #facilitate db ops
 user = "lacher"
 passw = "pass"
 
@@ -37,11 +38,18 @@ def user():
         last_name=request.args['last_name']
         username=request.args['username']
         password=request.args['password']
-    create_user(first_name, last_name, username, password)
+    user_id = str(random.randint(0,10000000))
+    create_user(first_name, last_name, username, password, user_id)
     session["username"] = username
     session["password"] = password
     session["method"] = method
-    return render_template('profile.html', fName=first_name, lName=last_name, name=username, password=password, method=method)
+    session["user_id"] = user_id
+    return render_template('profile.html', fName=first_name, lName=last_name, name=username, password=password, user_id=user_id, method=method)
+
+# @app.route("users/" + user_id, methods=['POST', 'GET'])
+# def profile(user_id):
+#     c = db.cursor()
+#     c.execute("SELECT first_name, last_name, username FROM users WHERE user_id= ? ", (user_id))
 
 @app.route("/logout", methods=['POST', 'GET'])
 def logout():
@@ -70,7 +78,18 @@ def authenticate():
     print(request.args)
     print("***DIAG: request.headers ***")
     print(request.headers)
-
+    print("hello")
+    db = sqlite3.connect("blog")
+    c = db.cursor()
+    c.execute("SELECT user_id, first_name, last_name FROM users WHERE username= ? AND password = ? ", (username, password))
+    data = c.fetchall()
+    # note to catch errors here
+    if len(data) == 0:
+        return render_template('error.html', message="user and password do not exist")
+    for d in data:
+        user_id = d[0]
+        first_name = d[1]
+        last_name = d[2]
    # if(username != user): 
    #     if(password != passw): #both password and username wrong
    #           return render_template('error.html', message="Incorrect username and password")
@@ -80,7 +99,7 @@ def authenticate():
     session["username"] = username
     session["password"] = password
     session["method"] = method
-    return render_template('profile.html', name=username, password=password, method=method)  #response to a form submission
+    return render_template('profile.html', user_id=user_id, name=username, fName=first_name, lName=last_name, password=password, method=method)  #response to a form submission
 
 if __name__ == "__main__":  # true if this file NOT imported
   app.debug = True        # enable auto-reload upon code change
