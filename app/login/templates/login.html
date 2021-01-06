@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!-- 
+  Team Lach On (Maddy Andersen, Dean Carey, Kelly Huang, Erin Lee)
+  SoftDev -- Rona Ed.
+  K15: Sessions Greetings: Flask app that uses session capabilities to allow a user to login and logout.
+  Due Dec 14 2020
+ -->
+
+<html>
+  <head>
+    <title>Login Page</title>
+  </head>
+  <body>
+    <h4>Team Lach On (Maddy Andersen, Dean Carey, Kelly Huang, Erin Lee)</h4>
+    <h4> {{ message }} </h4>
+    <h1>
+      Welcome, Travelers of the Intertoobz!
+    </h1>
+    <h3>
+      Enter your username.
+    </h3>
+    <form action = "/auth" method="POST">
+        <input type="text" name="username"> 
+        <br>       
+        <h3> Enter your password. </h3>
+	<input type="password" name="password">
+        <br> <br>
+        <input type="submit" name="sub1">
+    </form>
+  </body>
+</html>
