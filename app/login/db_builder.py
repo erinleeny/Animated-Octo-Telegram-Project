@@ -22,11 +22,30 @@ def create_user(first_name, last_name, username, password):
 	c.execute("INSERT INTO users VALUES(" + user_id + ",'" + first_name + "','" + last_name + 
 	"','" + username + "','" + password + "');")
 
-	#c.execute("SELECT password FROM users WHERE username = '" + user + "'" )
-
 	db.commit() #save changes
 	db.close()
 
 
+def create_blog(name, user_id, creation_date):
+        blog_id = str(random.randint(0,10000000))
+        db = sqlite3.connect("blog")
+
+        c = db.cursor() #facilitate db ops
+
+        c.execute("INSERT INTO users VALUES('" + name + "'," + user_id + ",'" + creation_date + "');")
+
+        db.commit() #save changes
+        db.close()
 
 
+def create_entry(blog_id, title, creation_date):
+        entry_id = str(random.randint(0,10000000))
+        db = sqlite3.connect("blog")
+
+        c = db.cursor() #facilitate db ops
+
+        c.execute("INSERT INTO users VALUES(" + entry_id + "," + user_id + ",'" + title +
+        "', '', '" + creation_date + "');")
+
+        db.commit() #save changes
+        db.close()
