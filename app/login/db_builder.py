@@ -49,8 +49,24 @@ def create_entry(entry_id, blog_id, title, content, creation_date):
 
     c = db.cursor() #facilitate db ops
 
-    c.execute("INSERT INTO entries VALUES(" + entry_id + "," + blog_id + ",'" + title +
-    "', '', '" + creation_date + "');")
+    c.execute("INSERT INTO entries VALUES(?, ?, ?, ?, ?)", (entry_id, blog_id, title, content, creation_date))
 
     db.commit() #save changes
     db.close()
+
+def list_blogs(user_id):
+    db = sqlite3.connect("blog")
+    c = db.cursor() #facilitate db ops
+    c.execute("SELECT blog_id, name, description FROM blogs WHERE user_id= " + str(user_id))
+    data = c.fetchall()
+    blogs = []
+    for d in data:
+        blog = {}
+        blog["blog_id"]=d[0]
+        blog["name"]=d[1]
+        blog["description"]=d[2]
+        blogs.append(blog)
+    db.commit() #save changes
+    db.close()
+    print(blogs)
+    return blogs

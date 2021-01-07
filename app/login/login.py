@@ -7,7 +7,7 @@ from flask import Flask, render_template, session
 from flask import request, redirect, url_for
 import os
 import random
-from db_builder import create_user, authenticate_user, create_blog, create_entry
+from db_builder import create_user, authenticate_user, create_blog, create_entry, list_blogs
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32) #set up session secret key
@@ -18,7 +18,7 @@ passw = "pass"
 @app.route("/") 
 def test_tmplt():
     if "username" in session:
-        return render_template('profile.html', user_id=session['user_id'], fName= session["first_name"], lName= session["last_name"], name=session['username'], password=session['password'],method=session['method'])
+        return render_template('profile.html', user_id=session['user_id'], fName= session["first_name"], lName= session["last_name"], name=session['username'], password=session['password'],method=session['method'], blogs=list_blogs(session["user_id"]))
     return render_template('login.html', message="")
 
 @app.route("/register", methods=['POST','GET'])
@@ -38,7 +38,18 @@ def user():
         last_name=request.args['last_name']
         username=request.args['username']
         password=request.args['password']
-    user_id = str(random.randint(0,10000000))
+    db = sqlite3.connect("blog")
+    c = db.cursor()
+    c.execute("SELECT * FROM users WHERE username = '" + username + "'") #check to see whether user already exists
+    check = c.fetchall()
+    db.commit()
+    db.close()
+    if len(check) == 0:
+        user_id = str(random.randint(0,10000000))
+        create_user(first_name, last_name, username, password, user_id)
+    else:
+        return render_template('error.html', message="Username already exists")
+        ## todo: direct to a different error page that takes you to sign up page
     create_user(first_name, last_name, username, password, user_id)
     session["username"] = username
     session["password"] = password
@@ -55,10 +66,6 @@ def blog_register():
 @app.route(("/create_entry"), methods=["POST", "GET"])
 def entry_register():
     return render_template('create_entry.html')
-# @app.route("users/" + user_id, methods=['POST', 'GET'])
-# def profile(user_id):
-#     c = db.cursor()
-#     c.execute("SELECT first_name, last_name, username FROM users WHERE user_id= ? ", (user_id))
 @app.route(("/save_entry"), methods=["POST", "GET"])
 def entry_save():
     method=request.method
@@ -92,11 +99,27 @@ def show_blog():
     name = request.args["name"]
     description = request.args["description"]
     session["blog_id"] = blog_id
-    session["blog_name"] = blog_name
-    session["blog_description"] = blog_description
+    session["blog_name"] = name
+    session["blog_description"] = description
     print(session["blog_id"])
     return render_template('blog.html', blog_id=blog_id, name=name, description=description, username=session["username"])
-    
+
+@app.route(("/show_existing_blog"), methods=["POST", "GET"])
+def show_existing_blog():
+    method=request.method
+    if method == "POST":
+        blog_id=request.form["id"]
+    else:
+        blog_id=request.args["id"]
+    db = sqlite3.connect("blog")
+    c = db.cursor()
+    c.execute("SELECT name, description FROM blogs WHERE blog_id=" + blog_id)
+    data = c.fetchone()
+    session["blog_id"] = blog_id
+    session["blog_name"] = data[0]
+    session["blog_description"] = data[1]
+    return render_template('blog.html', blog_id=blog_id, name=data[0], description=data[1], username=session["username"])
+
 @app.route("/logout", methods=['POST', 'GET'])
 def logout():
     session.pop("username")
@@ -131,7 +154,7 @@ def authenticate():
     data = c.fetchall()
     # note to catch errors here
     if len(data) == 0:
-        return render_template('error.html', message="user and password do not exist")
+        return render_template('error.html', message="Login Failed")
     for d in data:
         user_id = d[0]
         first_name = d[1]
@@ -148,7 +171,7 @@ def authenticate():
     session["user_id"] = user_id
     session["first_name"] = first_name
     session["last_name"] = last_name
-    return render_template('profile.html', user_id=user_id, name=username, fName=first_name, lName=last_name, password=password, method=method)  #response to a form submission
+    return render_template('profile.html', user_id=user_id, name=username, fName=first_name, lName=last_name, password=password, method=method,data=list_blogs(session["user_id"]), blogs=list_blogs(user_id))  #response to a form submission
 
 if __name__ == "__main__":  # true if this file NOT imported
   app.debug = True        # enable auto-reload upon code change

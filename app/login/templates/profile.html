@@ -23,6 +23,23 @@
     <form action = "/logout" method="POST">
         <input type="submit" value="logout">
     </form>
+    <table>
+      {% for blog in blogs %}
+      <tr> 
+        <td>
+          <form action = "/show_existing_blog" method="POST">
+            <input type="submit" name="id" value="{{ blog['blog_id'] }}">
+        </form>
+        </td>
+        <td>
+          {{ blog['name'] }}
+          </td>
+          <td>
+            {{ blog['description'] }}
+            </td>
+      </tr>
+      {%  endfor %}
+    </table>
   </body>
 
 </html>
