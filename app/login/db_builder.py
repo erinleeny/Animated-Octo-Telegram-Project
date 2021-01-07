@@ -9,7 +9,7 @@ db = sqlite3.connect("blog")
 c = db.cursor() #facilitate db ops
 
 #c.execute("CREATE TABLE users(user_id INTEGER PRIMARY KEY, username TEXT, first_name TEXT, last_name TEXT, password TEXT)")
-#c.execute("CREATE TABLE blogs(blog_id INTEGER PRIMARY KEY, name TEXT, user_id INTEGER, creation_date TEXT)")
+#c.execute("CREATE TABLE blogs(blog_id INTEGER PRIMARY KEY, name TEXT, description TEXT, user_id INTEGER, creation_date TEXT)")
 #c.execute("CREATE TABLE entries(entry_id INTEGER PRIMARY KEY, blog_id INTEGER, title TEXT, content TEXT, creation_date TEXT)")
 #c.execute("INSERT INTO users VALUES(0, 'LachOn', 'Team', 'LachOn', 'tester')")
 
@@ -33,13 +33,12 @@ def authenticate_user(username, password):
 	db.close()
 	return result_set
 
-def create_blog(name, user_id, creation_date):
-    blog_id = str(random.randint(0,10000000))
+def create_blog(blog_id, name, description, user_id, creation_date):
     db = sqlite3.connect("blog")
 
     c = db.cursor() #facilitate db ops
 
-    c.execute("INSERT INTO users VALUES('" + name + "'," + user_id + ",'" + creation_date + "');")
+    c.execute("INSERT INTO blogs VALUES(?, ?, ?, ?, ?)", (blog_id, name, description, user_id, creation_date))
 
     db.commit() #save changes
     db.close()
