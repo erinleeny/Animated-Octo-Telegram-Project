@@ -122,7 +122,8 @@ def show_existing_blog():
     data_entries = c.fetchone()
     check = c.fetchall()
     if len(check) == 0:
-        return render_template('blog.html', blog_id=blog_id, name=data[0], description=data[1], username=session["username"])
+        session["blog_id"] = blog_id
+        return render_template('blog.html', blog_id=blog_id, name=data[0], description=data[1], username=session["username"], entries=list_entries(session["blog_id"]))
     else:
         session["blog_id"] = blog_id
         session["entry_title"] = data_entries[0]
