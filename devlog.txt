@@ -16,8 +16,10 @@ Created design PDF, with project components, task breakdown, site map, database 
 > maddyA -- 2020-12-20 19:45
 Created updated design PDF (for blog project, instead of wiki project), including project components, component map, databases, site map, and task breakdown. Uploaded to repo. 
 > maddyA -- 2020-12-22 9:15
-Added wiki
+Reuploaded wiki design PDF
 > deanC -- 2021-1-05 22:45
 Set up registering users, set up database, etc.
 > erinL -- 2021-1-04 22:55
 Combined profile files to project, re-added design.pdf
+> > maddyA -- 2021-1-7 10:45
+Added list of entries for each blog
