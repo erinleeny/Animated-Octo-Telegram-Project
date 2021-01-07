@@ -7,7 +7,7 @@ from flask import Flask, render_template, session
 from flask import request, redirect, url_for
 import os
 import random
-from db_builder import create_user, authenticate_user, create_blog, create_entry, list_blogs
+from db_builder import create_user, authenticate_user, create_blog, create_entry, list_blogs, list_entries
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32) #set up session secret key
@@ -15,7 +15,7 @@ app.secret_key = os.urandom(32) #set up session secret key
 user = "lacher"
 passw = "pass"
 
-@app.route("/") 
+@app.route("/")
 def test_tmplt():
     if "username" in session:
         return render_template('profile.html', user_id=session['user_id'], fName= session["first_name"], lName= session["last_name"], name=session['username'], password=session['password'],method=session['method'], blogs=list_blogs(session["user_id"]))
@@ -50,7 +50,6 @@ def user():
     else:
         return render_template('error.html', message="Username already exists")
         ## todo: direct to a different error page that takes you to sign up page
-    create_user(first_name, last_name, username, password, user_id)
     session["username"] = username
     session["password"] = password
     session["method"] = method
@@ -118,7 +117,17 @@ def show_existing_blog():
     session["blog_id"] = blog_id
     session["blog_name"] = data[0]
     session["blog_description"] = data[1]
-    return render_template('blog.html', blog_id=blog_id, name=data[0], description=data[1], username=session["username"])
+
+    c.execute("SELECT title, content FROM entries WHERE blog_id=" + blog_id)
+    data_entries = c.fetchone()
+    check = c.fetchall()
+    if len(check) == 0:
+        return render_template('blog.html', blog_id=blog_id, name=data[0], description=data[1], username=session["username"])
+    else:
+        session["blog_id"] = blog_id
+        session["entry_title"] = data_entries[0]
+        session["entry_content"] = data_entries[1]
+        return render_template('blog.html', blog_id=blog_id, name=data[0], description=data[1], title=data_entries[0], content=data_entries[1], username=session["username"], entries=list_entries(session["blog_id"]))
 
 @app.route("/logout", methods=['POST', 'GET'])
 def logout():
@@ -130,11 +139,11 @@ def logout():
 @app.route("/auth", methods=['POST', 'GET'])
 def authenticate():
     method=request.method
-    if method == "POST": 
-        username=request.form["username"] 
+    if method == "POST":
+        username=request.form["username"]
         password=request.form["password"]
     else:
-        username=request.args['username'] 
+        username=request.args['username']
         password=request.args['password']
 
     ## todo: authenticate against the actual table of users, not hard-coded
@@ -159,7 +168,7 @@ def authenticate():
         user_id = d[0]
         first_name = d[1]
         last_name = d[2]
-   # if(username != user): 
+   # if(username != user):
    #     if(password != passw): #both password and username wrong
    #           return render_template('error.html', message="Incorrect username and password")
    #     return render_template('error.html', message="Incorrect username")
@@ -176,12 +185,3 @@ def authenticate():
 if __name__ == "__main__":  # true if this file NOT imported
   app.debug = True        # enable auto-reload upon code change
   app.run()
-
-
-
-
-
-
-
-
-

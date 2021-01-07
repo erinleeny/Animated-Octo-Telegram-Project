@@ -13,14 +13,12 @@ c = db.cursor() #facilitate db ops
 #c.execute("CREATE TABLE entries(entry_id INTEGER PRIMARY KEY, blog_id INTEGER, title TEXT, content TEXT, creation_date TEXT)")
 #c.execute("INSERT INTO users VALUES(0, 'LachOn', 'Team', 'LachOn', 'tester')")
 
-def create_user(first_name, last_name, username, password, user_id): 
+def create_user(first_name, last_name, username, password, user_id):
 	db = sqlite3.connect("blog")
 
 	c = db.cursor() #facilitate db ops
 
-	c.execute("INSERT INTO users VALUES(" + user_id + ",'" + username + "','" + first_name + 
-	"','" + last_name + "','" + password + "');")
-
+	c.execute("INSERT INTO entries VALUES(?, ?, ?, ?, ?)", (user_id, username, first_name, last_name, password))
 	db.commit() #save changes
 	db.close()
 
@@ -68,5 +66,20 @@ def list_blogs(user_id):
         blogs.append(blog)
     db.commit() #save changes
     db.close()
-    print(blogs)
     return blogs
+
+def list_entries(blog_id):
+    db = sqlite3.connect("blog")
+    c = db.cursor() #facilitate db ops
+    c.execute("SELECT blog_id, title, content FROM entries WHERE blog_id= " + str(blog_id))
+    data = c.fetchall()
+    entries = []
+    for d in data:
+        entry = {}
+        entry["blog_id"]=d[0]
+        entry["title"]=d[1]
+        entry["content"]=d[2]
+        entries.append(entry)
+    db.commit() #save changes
+    db.close()
+    return entries
