@@ -44,13 +44,12 @@ def create_blog(blog_id, name, description, user_id, creation_date):
     db.close()
 
 
-def create_entry(blog_id, title, creation_date):
-    entry_id = str(random.randint(0,10000000))
+def create_entry(entry_id, blog_id, title, content, creation_date):
     db = sqlite3.connect("blog")
 
     c = db.cursor() #facilitate db ops
 
-    c.execute("INSERT INTO users VALUES(" + entry_id + "," + user_id + ",'" + title +
+    c.execute("INSERT INTO entries VALUES(" + entry_id + "," + blog_id + ",'" + title +
     "', '', '" + creation_date + "');")
 
     db.commit() #save changes
