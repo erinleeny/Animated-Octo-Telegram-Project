@@ -33,3 +33,5 @@ Added editing entries and blogs, combined Maddy's redirecting, Dean's navigation
 added team flag; updated requirements.txt, README.md, and design.pdf; set up showing other users' blogs + entries; added more navigation buttons; fixed login routing; resolved minor issues throughout
 > erinL -- 2021-1-08 1:52
 added my blog and entries!
+> deanC -- 2021-1-08 2:16
+added my blog and entries!
