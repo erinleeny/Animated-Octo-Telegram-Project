@@ -7,7 +7,7 @@
  -->
 <html>
   <head>
-    <title>Register Blog Page</title>
+    <title>Edit Blog</title>
   </head>
   <body>
     <form action = "/save_blog" method="POST">
@@ -15,7 +15,7 @@
       <input type="text" name="name" value="{{ name }}">
       <br>
       <h3> Enter a new description for your blog. </h3>
-      <input type="textarea" name="description" value="{{ description }}"><br>
+      <textarea rows = "10" cols = "50" name = "description"> {{ description }}  </textarea><br>
       <input type="submit" name="sub1">
     </form><br>
     <form action = "/" method="POST">
@@ -23,4 +23,3 @@
     </form>
   </body>
 </html>
-

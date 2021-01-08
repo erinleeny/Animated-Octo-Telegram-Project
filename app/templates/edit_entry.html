@@ -7,7 +7,7 @@
  -->
  <html>
   <head>
-    <title>Edit Entry Page</title>
+    <title>Edit Entry</title>
   </head>
   <body>
     <form action = "/update_entry" method="POST">
@@ -15,7 +15,7 @@
       <input type="text" name="entry_title" value = "{{ title }}">
       <br>
       <h3> Enter your entry. </h3>
-      <input type="textarea" name="content" value = "{{ content }}"><br>
+      <textarea rows = "10" cols = "50" name = "content"> {{ content }} </textarea><br> 
       <input type="submit" name="sub1">
     </form>
     <form action = "/show_existing_blog" method="POST">

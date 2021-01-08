@@ -2,20 +2,35 @@
 <!--
   Team Lach On (Maddy Andersen, Dean Carey, Kelly Huang, Erin Lee)
   SoftDev -- Rona Ed.
-  K14: Form and Function: Flask app to echo user input via HTML
-  Due Dec 10 2020
+  P0 - Da Art of Storytellin'(Pt.2)
+  Due 01-08-2021
  -->
 <html>
   <head>
     <title>All Users</title>
+    <style>
+    td{
+    border: 1px solid;
+    text-align: left;
+    padding: 6px;
+   }
+  </style>
   </head>
+  <h2> View all users' profiles! </h2>
   <body>
-    <table>
+   </style>
+    <table style="width:100%">
+      <tr>
+        <th>See Profile</th>
+        <th>Username</th>
+        <th>Name</th>
+      </tr>
+
       {% for user in users %}
       {% if user['user_id'] != user_id %}
       <tr>
         <td>
-          <form action = "/display_other_blog" method="POST">
+          <form action = "/view_user" method="POST">
             <input type="submit" name="id" value="{{ user['user_id'] }}">
         </form>
             </td>
@@ -23,14 +38,14 @@
             {{ user['username'] }}
         </td>
         <td>
-            {{ user['first_name'] }}
-        </td>
-        <td>
-            {{ user['last_name'] }}
+            {{ user['first_name'] }} {{ user['last_name'] }}
         </td>
       </tr>
       {% endif %}
       {%  endfor %}
-    </table>
+    </table><br>
+    <form action = "/" method="POST">
+      <input type="submit" value="Return to your profile">
+    </form>
   </body>
 </html>

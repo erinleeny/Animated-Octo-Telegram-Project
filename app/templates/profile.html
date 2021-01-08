@@ -8,22 +8,33 @@
 <html>
   <head>
     <title>{{ name }}'s Profile</title>
+    <style>
+    td{
+    border: 1px solid;
+    text-align: left;
+    padding: 6px;
+   }
+  </style>
   </head>
   <body>
     <h4>@{{ name }}</h4>
     <h3>{{ fName }} {{ lName }}'s Blogs</h3>
     <h4>ID: {{ user_id }}</h4>
 
+    {% if access %}
     <form action = "/register_blog" method="POST">
       <input type="submit" value="Create a Blog">
     </form><br>
+    {% endif %}
     <form action = "/all" method="POST">
       <input type="submit" value="View all users">
   </form><br>
+    {% if access %}
     <form action = "/logout" method="POST">
-        <input type="submit" value="logout">
+        <input type="submit" value="Log out">
     </form><br>
-    <table>
+    {% endif %}
+    <table style="width:100%">
       <tr>
         <th>Show More</th>
         <th>Name</th>
