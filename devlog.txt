@@ -25,3 +25,5 @@ Combined profile files to project, re-added design.pdf
 Added list of entries for each blog
 > maddyA -- 2021-1-7 10:59
 Updated list of entries for each blog to display entries on blogs that previously did not have entries
+> erinL -- 2021-1-07 20:53
+Fixed folder structure!

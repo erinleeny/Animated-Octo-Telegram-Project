@@ -18,7 +18,7 @@ def create_user(first_name, last_name, username, password, user_id):
 
 	c = db.cursor() #facilitate db ops
 
-	c.execute("INSERT INTO entries VALUES(?, ?, ?, ?, ?)", (user_id, username, first_name, last_name, password))
+	c.execute("INSERT INTO users VALUES(?, ?, ?, ?, ?)", (user_id, username, first_name, last_name, password))
 	db.commit() #save changes
 	db.close()
 
