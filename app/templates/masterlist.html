@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+  Team Lach On (Maddy Andersen, Dean Carey, Kelly Huang, Erin Lee)
+  SoftDev -- Rona Ed.
+  K14: Form and Function: Flask app to echo user input via HTML
+  Due Dec 10 2020
+ -->
+<html>
+  <head>
+    <title>All Users</title>
+  </head>
+  <body>
+    <table>
+      {% for user in users %}
+      {% if user['user_id'] != user_id %}
+      <tr>
+        <td>
+          <form action = "/display_other_blog" method="POST">
+            <input type="submit" name="id" value="{{ user['user_id'] }}">
+        </form>
+            </td>
+        <td>
+            {{ user['username'] }}
+        </td>
+        <td>
+            {{ user['first_name'] }}
+        </td>
+        <td>
+            {{ user['last_name'] }}
+        </td>
+      </tr>
+      {% endif %}
+      {%  endfor %}
+    </table>
+  </body>
+</html>

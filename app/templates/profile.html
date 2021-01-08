@@ -2,12 +2,10 @@
 <!--
   Team Lach On (Maddy Andersen, Dean Carey, Kelly Huang, Erin Lee)
   SoftDev -- Rona Ed.
-  K14: Form and Function: Flask app to echo user input via HTML
-  Due Dec 10 2020
+  P0 - Da Art of Storytellin'(Pt.2)
+  Due 01-08-2021
  -->
-
 <html>
-
   <head>
     <title>{{ name }}'s Profile</title>
   </head>
@@ -18,28 +16,34 @@
 
     <form action = "/register_blog" method="POST">
       <input type="submit" value="Create a Blog">
-  </form>
-
+    </form><br>
+    <form action = "/all" method="POST">
+      <input type="submit" value="View all users">
+  </form><br>
     <form action = "/logout" method="POST">
         <input type="submit" value="logout">
-    </form>
+    </form><br>
     <table>
+      <tr>
+        <th>Show More</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
       {% for blog in blogs %}
       <tr>
         <td>
           <form action = "/show_existing_blog" method="POST">
             <input type="submit" name="id" value="{{ blog['blog_id'] }}">
-        </form>
+          </form>
         </td>
         <td>
           {{ blog['name'] }}
-          </td>
-          <td>
-            {{ blog['description'] }}
-            </td>
+        </td>
+        <td>
+          {{ blog['description'] }}
+        </td>
       </tr>
-      {%  endfor %}
+      {% endfor %}
     </table>
   </body>
-
 </html>

@@ -27,3 +27,5 @@ Added list of entries for each blog
 Updated list of entries for each blog to display entries on blogs that previously did not have entries
 > erinL -- 2021-1-07 20:53
 Fixed folder structure!
+> erinL -- 2021-1-07 23:24
+Added editing entries and blogs, combined Maddy's redirecting, Dean's navigation, Maddy/Kelly's start to showing all users
