@@ -27,7 +27,7 @@
       </tr>
 
       {% for user in users %}
-      {% if user['user_id'] != user_id %}
+      {% if user_id != user['user_id'] %}
       <tr>
         <td>
           <form action = "/view_user" method="POST">

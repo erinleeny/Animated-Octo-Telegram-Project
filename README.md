@@ -5,6 +5,7 @@
 * Dean Carey (dcarey10)
 * Kelly Huang (khuang11)
 * Maddy Andersen (mandersen10)
+
 All four Devos worked collaboratively to complete this project.
 
 ### Description
