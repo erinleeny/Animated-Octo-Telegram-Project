@@ -19,9 +19,9 @@ can do the same).
 https://github.com/erinleeny/Animated-Octo-Telegram-Project.git
 
 2. Install software listed in requirements.txt
-> $ pip3 install
+` $ pip3 install `
 3. Move into app directory
-> $ cd Animated-Octo-Telegram-Project/app/
+` $ cd Animated-Octo-Telegram-Project/app `
 
 4. Run app in python.
-> $ python3 __init__.py
+` $ python3 __init__.py `
